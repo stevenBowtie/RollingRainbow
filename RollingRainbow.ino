@@ -9,10 +9,14 @@ int state=0;
 byte color_step=20;
 byte rate=1;
 byte brightness=255;
+byte mode=0;
 
 byte value=0;
 
 void setup(){
+  pinMode(0,OUTPUT);
+  digitalWrite(0,1);
+  pinMode(0,INPUT);
   pinMode(2,OUTPUT);
   pinMode(3,OUTPUT);
 }
@@ -22,9 +26,17 @@ void loop(){
     shiftOut(dataPin, clock, MSBFIRST, red);
     shiftOut(dataPin, clock, MSBFIRST, green);
     shiftOut(dataPin, clock, MSBFIRST, blue);
-    get_colors(i*color_step+state);
-    //get_colors(random(765));
+    mode_switch();
+    switch(mode){
+      case 0:
+        get_colors(i*color_step+state);
+        break;
+      case 1:
+        get_colors(random(765));
+        break;
+    }
   }
+  if(mode==2){get_colors(random(765));}
   state+=rate; //Add delay here if necesarry.
   state=state%765;
   delay(10);
@@ -50,4 +62,11 @@ void get_colors(int current_state){
   }
 }
 
+void mode_switch(){
+  if(!digitalRead(0)){
+    mode=(mode+1)%3;
+    delay(500);
+  }
+}
+  
 
