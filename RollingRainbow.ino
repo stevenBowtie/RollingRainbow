@@ -7,9 +7,9 @@ byte blue=0;
 byte leds=15;
 int state=0;
 byte color_step=20;
-byte rate=1;
+byte rate=10;
 byte brightness=255;
-byte mode=0;
+byte mode=4;
 
 byte value=0;
 
@@ -19,6 +19,12 @@ void setup(){
   pinMode(0,INPUT);
   pinMode(2,OUTPUT);
   pinMode(3,OUTPUT);
+  for(int i=0;i<leds;i++){
+    shiftOut(dataPin, clock, MSBFIRST, red);
+    shiftOut(dataPin, clock, MSBFIRST, green);
+    shiftOut(dataPin, clock, MSBFIRST, blue);
+  }
+  delay(200);
 }
 
 void loop(){
@@ -30,16 +36,20 @@ void loop(){
     switch(mode){
       case 0:
         get_colors(i*color_step+state);
+        rate=10;
         break;
       case 1:
         get_colors(random(765));
+        rate=10;
         break;
     }
   }
-  if(mode==2){get_colors(random(765));}
-  state+=rate; //Add delay here if necesarry.
+  if(mode==2){get_colors(random(765));rate=50;}
+  if(mode==3){red=255;green=255;blue=255;}
+  if(mode==4){red=0;green=0;blue=0;}
+  state+=1; //Add delay here if necesarry.
   state=state%765;
-  delay(10);
+  delay(rate);
   
 }
 
@@ -64,7 +74,7 @@ void get_colors(int current_state){
 
 void mode_switch(){
   if(!digitalRead(0)){
-    mode=(mode+1)%3;
+    mode=(mode+1)%5;
     delay(500);
   }
 }
