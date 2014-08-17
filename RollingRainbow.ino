@@ -4,9 +4,9 @@ byte clock=2;
 byte green=255;
 byte red=0;
 byte blue=0;
-byte leds=14;
+byte leds=15;
 int state=0;
-byte color_step=10;
+byte color_step=20;
 byte rate=1;
 byte brightness=255;
 
@@ -22,8 +22,8 @@ void loop(){
     shiftOut(dataPin, clock, MSBFIRST, red);
     shiftOut(dataPin, clock, MSBFIRST, green);
     shiftOut(dataPin, clock, MSBFIRST, blue);
-    //get_colors(i*color_step+state);
-    get_colors(random(765));
+    get_colors(i*color_step+state);
+    //get_colors(random(765));
   }
   state+=rate; //Add delay here if necesarry.
   state=state%765;
