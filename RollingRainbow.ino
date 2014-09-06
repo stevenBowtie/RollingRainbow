@@ -29,9 +29,6 @@ void setup(){
 
 void loop(){
   for(int i=0;i<leds;i++){
-    shiftOut(dataPin, clock, MSBFIRST, red);
-    shiftOut(dataPin, clock, MSBFIRST, green);
-    shiftOut(dataPin, clock, MSBFIRST, blue);
     mode_switch();
     switch(mode){
       case 0:
@@ -43,6 +40,9 @@ void loop(){
         rate=10;
         break;
     }
+    shiftOut(dataPin, clock, MSBFIRST, red);
+    shiftOut(dataPin, clock, MSBFIRST, green);
+    shiftOut(dataPin, clock, MSBFIRST, blue);
   }
   if(mode==2){get_colors(random(765));rate=50;}
   if(mode==3){red=255;green=255;blue=255;}
