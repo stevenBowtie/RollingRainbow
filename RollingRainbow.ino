@@ -28,7 +28,7 @@ void setup(){
 }
 
 void loop(){
-  for(int i=0;i<leds;i++){
+  for(int i=leds;i>0;i--){
     mode_switch();
     switch(mode){
       case 0:
